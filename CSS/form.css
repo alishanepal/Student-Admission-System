@@ -1,0 +1,96 @@
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+  text-align: left;
+}
+
+.form,
+.details,
+.input-field label,
+.input-field input,
+.gender,
+.advertise,
+.form-section,
+.form-group,
+.f-details,
+.f-details table,
+.f-details th,
+.f-details td,
+.father,
+.mother,
+.needs,
+.declare,
+.reason,
+.list,
+.off-use,
+.form-fill {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.college-choice label{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.f-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.f-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.f-details th {
+  padding: 2px;
+  border: 1px solid #333;
+}
+
+.f-details td {
+  padding: 8px;
+  border: 1px solid #333;
+  width: 5%;
+}
+
+.f-details input[type="text"],
+.f-details input[type="number"],
+.f-details input[type="email"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+input[type="submit"]:hover {
+  background-color: #666;
+}
