@@ -55,62 +55,6 @@ require('connection.php'); ?>
                             <input type="radio" name="gender" value="other">Others<br>
                         </div>
 
-                        <div class="advertise details">
-                            How did you come to know about the Academic program? (Please tick mark in the relevant
-                            box)<br>
-                            <label for="option1">Advertisement</label>
-                            <input type="checkbox" name="advertisement[]" value="Advertisement">
-                            <label for="option2">Friend</label>
-                            <input type="checkbox" name="advertisement[]" value="Friend">
-                            <label for="option3">Education Fair</label>
-                            <input type="checkbox" name="advertisement[]" value="Education Fair">
-                            <label for="option4">Internet</label>
-                            <input type="checkbox" name="advertisement[]" value="Internet">
-                            <label for="option5">Direct Mail</label>
-                            <input type="checkbox" name="advertisement[]" value="Direct Mail">
-                            <label for="option6">Other</label>
-                            <input type="checkbox" name="advertisement[]" value="Other">
-                        </div>
-
-                        <div class="form-section">
-                            <h2>Educational Background</h2>
-                            <div class="form-group">
-                                <label for="qualification">Highest Qualification</label>
-                                <input type="text" name="qualification" id="qualification" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="institute">Institute Name</label>
-                                <input type="text" name="instituteName" id="institute" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="year">Year of Passing</label>
-                                <input type="number" name="yearOfPassing" id="year" required>
-                            </div>
-                        </div>
-
-                        <div class="college-choice">
-                            <h2>Preferred College & Course</h2>
-                            <label for="preferred-college">Preferred College:</label><br>
-                            <select id="preferred-college" name="preferredCollege" required>
-                                <option value="" disabled selected>Select your preferred college</option>
-                                <option value="college1">College 1</option>
-                                <option value="college2">College 2</option>
-                                <option value="college3">College 3</option>
-                                <option value="college4">College 4</option>
-                                <option value="college5">College 5</option>
-                            </select><br><br>
-
-                            <label for="preferred-course">Preferred Course:</label><br>
-                            <select id="preferred-course" name="preferredCourse" required>
-                                <option value="" disabled selected>Select your preferred course</option>
-                                <option value="course1">Course 1</option>
-                                <option value="course2">Course 2</option>
-                                <option value="course3">Course 3</option>
-                                <option value="course4">Course 4</option>
-                                <option value="course5">Course 5</option>
-                            </select><br><br>
-                        </div>
-
                         <h2>FAMILY DETAILS</h2>
                         <div class="f-details">
                             <table border="1px" class="table">
@@ -198,6 +142,66 @@ require('connection.php'); ?>
                                     </td>
                                 </tr>
                             </table>
+                        </div>
+
+                        <div class="form-section">
+                            <h2>Educational Background</h2>
+                            <div class="form-group">
+                                <label for="qualification">Highest Qualification</label>
+                                <input type="text" name="qualification" id="qualification" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="institute">Institute Name</label>
+                                <input type="text" name="instituteName" id="institute" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="year">Year of Passing</label>
+                                <input type="number" name="yearOfPassing" id="year" required>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="college-choice">
+                            <h2>Preferred College & Course</h2>
+                            <label for="preferred-college">Preferred College:</label><br>
+                            <select id="preferred-college" name="preferredCollege" required>
+                                <option value="" disabled selected>Select your preferred college</option>
+                                <option value="college1">College 1</option>
+                                <option value="college2">College 2</option>
+                                <option value="college3">College 3</option>
+                                <option value="college4">College 4</option>
+                                <option value="college5">College 5</option>
+                            </select><br><br>
+
+                            <label for="preferred-course">Preferred Course:</label><br>
+                            <select id="preferred-course" name="preferredCourse" required>
+                                <option value="" disabled selected>Select your preferred course</option>
+                                <option value="course1">Course 1</option>
+                                <option value="course2">Course 2</option>
+                                <option value="course3">Course 3</option>
+                                <option value="course4">Course 4</option>
+                                <option value="course5">Course 5</option>
+                            </select><br><br>
+                        </div>
+
+                        <div class="advertise details">
+                            How did you come to know about the Academic program? (Please tick mark in the relevant
+                            box)<br>
+                            <label for="option1">Advertisement</label>
+                            <input type="checkbox" name="advertisement[]" value="Advertisement">
+                            <label for="option2">Friend</label>
+                            <input type="checkbox" name="advertisement[]" value="Friend">
+                            <label for="option3">Education Fair</label>
+                            <input type="checkbox" name="advertisement[]" value="Education Fair">
+                            <label for="option4">Internet</label>
+                            <input type="checkbox" name="advertisement[]" value="Internet">
+                            <label for="option5">Direct Mail</label>
+                            <input type="checkbox" name="advertisement[]" value="Direct Mail">
+                            <label for="option6">Other</label>
+                            <input type="checkbox" name="advertisement[]" value="Other">
                         </div>
 
                         <span class="title">SPECIAL NEEDS(if any)</span>
