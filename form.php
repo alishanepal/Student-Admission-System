@@ -23,7 +23,7 @@ require('connection.php'); ?>
 
     <section>
         <div class="container">
-            <form action="formInsert.php" method="POST" action="formInsert.php">
+            <form action="" method="POST">
                 <div class="form first">
                     <div class="details">
                         <h2>PERSONAL DETAILS</h2>

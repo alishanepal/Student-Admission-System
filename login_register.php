@@ -3,8 +3,8 @@ require('connection.php');
 session_start();
 
 if (isset($_POST['register'])) {
-    $user_exist_query = "SELECT * FROM `user_info` WHERE `username`='$_POST[username]' OR `email`='$_POST[email]'";
-    $result = mysqli_query($con1, $user_exist_query);
+    $user_exist_query = "SELECT * FROM `user_login` WHERE `username`='$_POST[username]' OR `email`='$_POST[email]'";
+    $result = mysqli_query($con, $user_exist_query);
 
     if ($result) {
         if (mysqli_num_rows($result) > 0) {
@@ -30,8 +30,8 @@ if (isset($_POST['register'])) {
             } else {
 
                 $password=password_hash($_POST['password'],PASSWORD_BCRYPT);
-                $query = "INSERT INTO `user_info`(`fullname`,`username`,`email`,`password`) VALUE('$_POST[fullname]','$_POST[username]','$_POST[email]','$password')";
-                if (mysqli_query($con1, $query)) {
+                $query = "INSERT INTO `user_login`(`fullname`,`username`,`email`,`password`) VALUE('$_POST[fullname]','$_POST[username]','$_POST[email]','$password')";
+                if (mysqli_query($con, $query)) {
                     echo "
                     <script>alert('Registration successful');
                     window.location.href='index.php';
@@ -60,10 +60,10 @@ if (isset($_POST['register'])) {
    if(isset($_POST['login']))
    {
 $adminquery="SELECT * FROM `admin_login` WHERE `email`='$_POST[email_username]' OR `username`='$_POST[email_username]'";
-$adminresult=mysqli_query($con1,$adminquery); 
+$adminresult=mysqli_query($con,$adminquery); 
 
-$userquery="SELECT * FROM `user_info` WHERE `email`='$_POST[email_username]' OR `username`='$_POST[email_username]'";
-$userresult=mysqli_query($con1,$userquery); 
+$userquery="SELECT * FROM `user_login` WHERE `email`='$_POST[email_username]' OR `username`='$_POST[email_username]'";
+$userresult=mysqli_query($con,$userquery); 
 
 
 if(mysqli_num_rows($adminresult)==1)
