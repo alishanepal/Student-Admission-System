@@ -69,7 +69,7 @@ $userresult=mysqli_query($con,$userquery);
 if(mysqli_num_rows($adminresult)==1)
 {
 $result=mysqli_fetch_assoc($adminresult);
-if ($_POST['password'] == $result['password'])
+if ($_POST['password'] == $result['password'])  
 {
     $_SESSION['loggedin']=true;
     $_SESSION['userrname']=$result['username'];
