@@ -3,20 +3,24 @@ require('connection.php');
 session_start();
 
 if (isset($_POST['register'])) {
-    $user_exist_query = "SELECT * FROM `user_login` WHERE `username`='$_POST[username]' OR `email`='$_POST[email]'";
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+
+    // Check if username or email already exist
+    $user_exist_query = "SELECT * FROM `user_login` WHERE `username`='$username' OR `email`='$email'";
     $result = mysqli_query($con, $user_exist_query);
 
     if ($result) {
         if (mysqli_num_rows($result) > 0) {
             $result_fetch = mysqli_fetch_assoc($result);
-            if ($result_fetch['username'] == $_POST['username']) {
+            if ($result_fetch['username'] == $username) {
                 echo "
-                <script>alert('$result_fetch[username]-username already taken');
+                <script>alert('{$result_fetch['username']} - username already taken');
                 window.location.href='index.php';
                 </script>";
-            } else {  
+            } else {
                 echo "
-                <script>alert('$result_fetch[email]-email already taken');
+                <script>alert('{$result_fetch['email']} - email already taken');
                 window.location.href='index.php';
                 </script>";
             }
@@ -28,18 +32,20 @@ if (isset($_POST['register'])) {
                 window.location.href='index.php';
                 </script>";
             } else {
+                $fullname = $_POST['fullname'];
+                $usertype = $_POST['usertype'];
+                $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
-                $password=password_hash($_POST['password'],PASSWORD_BCRYPT);
-                $query = "INSERT INTO `user_login`(`fullname`,`username`,`email`,`password`) VALUE('$_POST[fullname]','$_POST[username]','$_POST[email]','$password')";
+                $query = "INSERT INTO `user_login`(`fullname`, `username`, `email`, `password`, `usertype`) VALUES ('$fullname', '$username', '$email', '$password', '$usertype')";
                 if (mysqli_query($con, $query)) {
                     echo "
                     <script>alert('Registration successful');
-                    window.location.href='index.php';
+                    window.location.href='Index-pages/index.php';
                     </script>";
                 } else {
                     echo "
                     <script>alert('Cannot run query');
-                    window.location.href='index.php';
+                    window.location.href='Index-pages/index.php';
                     </script>";
                 }
             }
@@ -48,73 +54,71 @@ if (isset($_POST['register'])) {
         echo "
         <script>
         alert('Cannot run query');
-        window.location.href='index.php';
+        window.location.href='Index-pages/index.php';
         </script>";
     }
 }
 
-
-
 #for login
 
-   if(isset($_POST['login']))
-   {
-$adminquery="SELECT * FROM `admin_login` WHERE `email`='$_POST[email_username]' OR `username`='$_POST[email_username]'";
-$adminresult=mysqli_query($con,$adminquery); 
+if (isset($_POST['login'])) {
+    $email_username = $_POST['email_username'];
+    $password = $_POST['password'];
 
-$userquery="SELECT * FROM `user_login` WHERE `email`='$_POST[email_username]' OR `username`='$_POST[email_username]'";
-$userresult=mysqli_query($con,$userquery); 
+    // Check admin login
+    $admin_query = "SELECT * FROM `admin_login` WHERE `email`='$email_username' OR `username`='$email_username'";
+    $admin_result = mysqli_query($con, $admin_query);
 
+    if (mysqli_num_rows($admin_result) == 1) {
+        $admin_row = mysqli_fetch_assoc($admin_result);
+        if (password_verify($password, $admin_row['password'])) {
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $admin_row['username'];
+            header("location: admin/adminDashboard.php");
+            exit;
+        } else {
+            echo "
+            <script>
+            alert('Incorrect Password');
+            window.location.href='Index-pages/index.php';
+            </script>";
+        }
+    } else {
+        // Check user login
+        $user_query = "SELECT * FROM `user_login` WHERE `email`='$email_username' OR `username`='$email_username'";
+        $user_result = mysqli_query($con, $user_query);
 
-if(mysqli_num_rows($adminresult)==1)
-{
-$result=mysqli_fetch_assoc($adminresult);
-if ($_POST['password'] == $result['password'])  
-{
-    $_SESSION['loggedin']=true;
-    $_SESSION['userrname']=$result['username'];
-    header("location:adminDashboard.php");
-}
-else{
-    echo"
-    <script>
-    alert('Incorrect Password');
-    window.location.href='index.php';
-    </script>
-    ";
-}
-}
+        if (mysqli_num_rows($user_result) == 1) {
+            $user_row = mysqli_fetch_assoc($user_result);
+            if (password_verify($password, $user_row['password'])) {
+                $_SESSION['loggedin'] = true;
+                $_SESSION['username'] = $user_row['username'];
+                $_SESSION['usertype']= $user_row['usertype'];
+                $_SESSION['userid']= $user_row['user_id'];
 
-elseif(mysqli_num_rows($userresult)==1)
-{
-$result_fetch=mysqli_fetch_assoc($userresult);
-if(password_verify($_POST['password'],$result_fetch['password']))
-{
-
-    $_SESSION['logged_in']=true;
-    $_SESSION['username']=$result_fetch['username'];
-    header("location:index.php");
+                if ($user_row['usertype'] == 'College') {
+                    header("Location: college.php");
+                    
+                    exit;
+                } elseif ($user_row['usertype'] == 'Student') {
+                    header("Location: Index-pages/index.php");
+                   
+                    exit;
+                }
+            } else {
+                echo "
+                <script>
+                alert('Incorrect Password');
+                window.location.href='Index-pages/index.php';
+                </script>";
+            }
+        } else {
+            echo "
+            <script>
+            alert('Email or username not registered');
+            window.location.href='Index-pages/index.php';
+            </script>";
+        }
+    }
 }
-else{
-    echo"
-    <script>
-    alert('Incorrect Password');
-    window.location.href='index.php';
-    </script>
-    ";
-}
-}
-
-else{
-    echo"
-    <script>
-    alert('Email or username not registered');
-    window.location.href='index.php';
-    </script>
-    ";
-}}
-   
 ?>
-
-
-

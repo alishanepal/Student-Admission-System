@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
         var table = document.createElement('table');
         table.classList.add('course-table');
         var headerRow = table.insertRow();
-        headerRow.innerHTML = '<th>Course ID</th><th>Course_Name</th><th>Begins At</th><th>Duration</th><th>Admission_fees</th><th>Fee_Structure</th>';
+        headerRow.innerHTML = '<th>Course_Code</th><th>Course_Name</th><th>Begins At</th><th>Duration</th><th>Admission_fees</th><th>Fee_Structure</th>';
 
         for (var i = 1; i <= numberOfCourses; i++) {
             var courseNumber = 'course' + i;
 
             var row = table.insertRow();
             row.innerHTML =
-                '<td><input type="text" name="courseID[]" placeholder="Course ID" required></td>' +
+                '<td><input type="text" name="courseCode[]" placeholder="Course code" required></td>' +
                 '<td><input type="text" name="courseName[]" placeholder="Course Name" required></td>' +
                 '<td><input type="text" name="beginsAt[]" placeholder="Begins At" required></td>' +
                 '<td><input type="text" name="duration[]" placeholder="Duration" required></td>' +

@@ -1,5 +1,5 @@
 <?php
-require('connection.php');
+require('../connection.php');
 session_start();
 ?>
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ session_start();
 
 <body>
   <style>
-    <?php include "CSS/header.css" ?>
+    <?php include "../CSS/header.css" ?>
   </style>
   <header>
     <div>
@@ -29,12 +29,13 @@ session_start();
         <li><a href="contact.php">Contact Us</a></li>
       </ul>
       <?php
-      if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
-        echo "<div class='username'>
+      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
+        echo "<div class='username'> 
             <span class='username'>Welcome   {$_SESSION['username']}</span>
+            
             <br>
             <div class='logout'>
-              <a href='logout.php'>Logout</a>
+              <a href='../logout.php'>Logout</a>
             </div>
           </div>";
       } else {
@@ -51,7 +52,7 @@ session_start();
 
   <div class="popup-container" id="login-popup">
     <div class="popup">
-      <form method="POST" action="login_register.php">
+      <form method="POST" action="../login_register.php">
         <div class="login-header">
           <h2 class="h2">
             LOGIN
@@ -77,7 +78,7 @@ session_start();
 
   <div class="popup-container" id="register-popup">
     <div class="register popup">
-      <form method="POST" action="login_register.php" onsubmit="return validateForm()">
+      <form method="POST" action="../login_register.php" onsubmit="return validateForm()">
         <div class="login-header">
           <h2>
             REGISTER
@@ -109,6 +110,15 @@ session_start();
           <i class="uil uil-eye-slash pw_hide"></i>
         </div>
 
+        <div class="input_box">
+          <select name="usertype">
+            <option disabled selected hidden><i class="uil uil-user-check"></i>User Type</option>
+            <option><i class="uil uil-book-reader"></i>Student</option>
+            <option><i class="uil uil-university"></i>College</option>
+          </select>
+        </div>
+
+
         <button type="submit" name="register" class="button">Signup Now</button>
 
         <div class="login_signup">Already have an account? <a href="#" id="login">Login</a></div>
@@ -116,7 +126,7 @@ session_start();
     </div>
   </div>
   <script>
-    <?php include "header.js" ?>
+    <?php include "../JS/header.js" ?>
   </script>
 </body>
 

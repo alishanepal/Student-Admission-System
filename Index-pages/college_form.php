@@ -5,7 +5,7 @@
     <title>College affiliation Form</title>
     <link rel="stylesheet" href="college_form.css">
     <style>
-        <?php include "CSS/college_form.css" ?>
+        <?php include "../CSS/college_form.css" ?>
     </style>
 </head>
 
@@ -13,7 +13,7 @@
     <?php include('header.php'); ?>
 
     <section>
-        <form id="collegeAffiliationForm" action="college/submit.php" method="POST">
+        <form id="collegeAffiliationForm" action="../admin/college/submit.php" method="POST"><br><br>
             <h1 align="center">College affiliation Form</h1>
             <div class="inform details">
                 <span class="title">
@@ -22,7 +22,7 @@
                 <div class="info">
                     <div class="info-field">
                         <label for="college">Name of the institution</label>
-                        <input type="text" id="college" name="college" required><br><br>
+                        <input type="text" id="collegeName" name="collegeName" required><br><br>
 
                         <label for="address">Address</label>
                         <input type="text" id="address" name="address" required><br><br>
@@ -38,13 +38,13 @@
                         <label for="establishmentDate">Date of establishment: </label>
                         <input type="date" id="establishmentDate" name="establishmentDate" required><br><br>
 
-
-                        <label for="college_type">College Type</label>
-                        <select name="college-type" id="college-type">
-                            <option class="1">Private institution</option>
-                            <option class="1">Government</option>
-                            <option class="1">Non-profit organization</option>
+                        <label for="collegeType">College Type</label>
+                        <select name="collegeType" id="collegeType">
+                            <option value="private">Private institution</option>
+                            <option value="government">Government</option>
+                            <option value="non-profit">Non-profit organization</option>
                         </select>
+
                     </div>
 
                     <div class="courses">
@@ -100,13 +100,22 @@
                         <p id="declarationError" style="display: none; color: red;">Please tick the checkbox to proceed.
                         </p>
                     </div>
-                    <input type="submit" value="Submit" onclick="return validateForm()">
+
+                    <?php
+
+                    if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'College') {
+                        echo " 
+                        <input type='submit' value='Submit' onclick='return validateForm()'>";
+                    } else {
+                        echo " please login as College to submit the form";
+                    }
+                    ?>
 
         </form>
     </section>
-
+ 
     <script>
-        <?php include "college/college_form.js" ?>
+        <?php include "../JS/college_form.js" ?>
     </script>
 </body>
 

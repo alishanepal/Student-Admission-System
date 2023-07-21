@@ -10,7 +10,7 @@ header {
   align-items: center;
   justify-content: space-between;
   z-index: 100;
-}
+} 
 
 /* Logo */
 .logo {
@@ -152,7 +152,8 @@ cursor: pointer;
   height: 40px;
   box-sizing: border-box;
 }
-.input_box input {
+.input_box input,
+.input_box select {
   height: 100%;
   width: 100%;
   border: none;
@@ -162,9 +163,14 @@ cursor: pointer;
   transition: all 0.2s ease;
   border-bottom: 1.5px solid #aaaaaa;
 }
-.input_box input:focus {
+.input_box input:focus,     
+.input_box select:focus {
   border-color: #7d2ae8;
 }
+.input_box select:active {
+  border-color: #7d2ae8;
+  color: #333; }
+
 .input_box i {
   position: absolute;
   top: 50%;
@@ -174,7 +180,9 @@ cursor: pointer;
 }
 .input_box i.email,
 .input_box i.password,
-.input_box i.user{
+.input_box i.user,
+.input_box i.userCheck
+{
   left: 0;
 }
 .input_box input:focus ~ i.email,

@@ -1,5 +1,5 @@
 <?php 
-require('connection.php');
+require('../connection.php');
 session_start();
 ?>
 
@@ -13,7 +13,7 @@ session_start();
 </head>
 <body>
 <style>
-  <?php include "CSS/style.css" ?>
+  <?php include "../CSS/style.css" ?>
 </style>
 <?php include('header.php'); ?>
 

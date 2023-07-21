@@ -2,12 +2,12 @@
 session_start();
 
 // Retrieve form data
-$college = $_POST['college'];
+$collegeName = $_POST['collegeName'];
 $address = $_POST['address'];
 $phoneNumber = $_POST['num'];
 $email = $_POST['email'];
 $year = $_POST['establishmentDate'];
-$collegeType = $_POST['college-type'];
+$collegeType = $_POST['collegeType'];
 $numberOfCourses = $_POST['numberOfCourses'];
 $campusSize = $_POST['campusSize'];
 $classrooms = $_POST['classrooms'];
@@ -19,13 +19,13 @@ $affiliation2 = $_POST['affiliation2'];
 $authorityName = $_POST['authority_name'];
 
 // Create a new record array
-$record = array(
-    'college' => $college,
+$record = [
+    'collegeName' => $collegeName,
     'address' => $address,
     'phoneNumber' => $phoneNumber,
     'email' => $email,
     'establishmentDate' => $year,
-    'college-type' => $collegeType,
+    'collegeType' => $collegeType,
     'numberOfCourses' => $numberOfCourses,
     'campusSize' => $campusSize,
     'classrooms' => $classrooms,
@@ -36,10 +36,10 @@ $record = array(
     'affiliation2' => $affiliation2,
     'authorityName' => $authorityName,
     'courses' => array() // Store courses in an array
-);
+];
 
 // Retrieve course data
-$courseID = $_POST['courseID'];
+$courseCode = $_POST['courseCode'];
 $courseNames = $_POST['courseName'];
 $beginsAt = $_POST['beginsAt'];
 $duration = $_POST['duration'];
@@ -47,9 +47,9 @@ $admissionFees = $_POST['admission_fee'];
 $feeStructures = $_POST['feeStructure'];
 
 // Create course records and add them to the record array
-for ($i = 0; $i < count($courseNames); $i++) {
+for ($i = 0; $i < count($courseCode); $i++) {
     $courseRecord = array(
-        'courseID' => $courseID[$i],
+        'courseCode' => $courseCode[$i],
         'courseName' => $courseNames[$i],
         'beginsAt' => $beginsAt[$i],
         'duration' => $duration[$i],
@@ -57,13 +57,20 @@ for ($i = 0; $i < count($courseNames); $i++) {
         'feeStructure' => $feeStructures[$i]
     );
 
-    $record['courses'][] = $courseRecord;
+    $record['courses'][] = $courseRecord;}
+    
+// Store the course records in the session
+$_SESSION['courses'] = $courseRecords;
+
+// Append the record to the session array
+if (!isset($_SESSION['records'])) {
+    $_SESSION['records'] = array();
 }
 
 // Append the record to the session array
 $_SESSION['records'][] = $record;
 
 // Redirect back to the form page
-header('Location: ../college_form.php');
+header('Location: ../../index-pages/college_form.php');
 exit();
 ?>

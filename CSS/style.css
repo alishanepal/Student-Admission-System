@@ -21,7 +21,7 @@
     right: 0;
     height: 100vh;
     width: 60vw;
-    background-image: url("image/Camb.png"); 
+    background-image: url("../image/Camb.png"); 
     background-size: cover          ;
     background-repeat: no-repeat;
     background-position: center;
@@ -86,7 +86,7 @@
 .admission-form{
   height:55vh;
   width:100%;
-  background-image:linear-gradient(rgba(47, 53, 75, 0.7),rgba(42, 46, 64, 0.7)),url("image/uni.jpg");
+  background-image:linear-gradient(rgba(47, 53, 75, 0.7),rgba(42, 46, 64, 0.7)),url("../image/uni.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
