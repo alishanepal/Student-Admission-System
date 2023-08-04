@@ -25,7 +25,7 @@ session_start();
       <ul class="nav-items">
         <li><a href="index.php">Home</a></li>
         <li><a href="about.php">About </a></li>
-        <li><a href="form.php">Admission Form </a></li>
+        <li><a href="form1.php">Admission Form </a></li>
         <li><a href="contact.php">Contact Us</a></li>
       </ul>
       <?php

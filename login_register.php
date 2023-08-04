@@ -74,7 +74,7 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $admin_row['password'])) {
             $_SESSION['loggedin'] = true;
             $_SESSION['username'] = $admin_row['username'];
-            header("location: admin/adminDashboard.php");
+            header("location: admin/admin/adminDashboard.php");
             exit;
         } else {
             echo "
@@ -97,7 +97,7 @@ if (isset($_POST['login'])) {
                 $_SESSION['userid']= $user_row['user_id'];
 
                 if ($user_row['usertype'] == 'College') {
-                    header("Location: college.php");
+                    header("Location: College/students_application.php");
                     
                     exit;
                 } elseif ($user_row['usertype'] == 'Student') {

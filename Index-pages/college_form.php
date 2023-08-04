@@ -13,7 +13,7 @@
     <?php include('header.php'); ?>
 
     <section>
-        <form id="collegeAffiliationForm" action="../admin/college/submit.php" method="POST"><br><br>
+        <form id="collegeAffiliationForm" action="../admin/college/insert_college.php" method="POST"><br><br>
             <h1 align="center">College affiliation Form</h1>
             <div class="inform details">
                 <span class="title">

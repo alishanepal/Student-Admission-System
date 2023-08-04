@@ -1,117 +1,125 @@
 <?php
-require('../../connection.php');
+session_start();
+require '../../connection.php';
+include "admintemplate.php";
 
+// Fetch data from colleges, facilities, courses, and course_coll_relation tables
+$query = "
+    SELECT 
+        c.*, 
+        f.*, 
+        cr.*, 
+        cc.*
+    FROM colleges AS c
+    JOIN facilities AS f ON c.college_id = f.college_id
+    JOIN course_coll_relation AS cr ON c.college_id = cr.college_id
+    JOIN courses AS cc ON cr.course_id = cc.course_id
+    WHERE c.status = 'approved'"; 
 
-// Retrieve college data with associated course data
-$query = "SELECT c.college_id, c.college_name, c.address, c.phone_number, c.email, c.establishment_date, c.college_type, c.authority_name, co.course_code, co.course_name, cr.begins_at, cr.duration, cr.admission_fee, cr.fee_structure
-          FROM colleges c
-          JOIN course_coll_relation cr ON c.college_id = cr.college_id
-          JOIN courses co ON cr.course_id = co.course_id";
-$result = mysqli_query($con, $query);
+$results = mysqli_query($con, $query);
 
-// Fetch all the college records
-$colleges = array();
-while ($row = mysqli_fetch_assoc($result)) {
-    $collegeId = $row['college_id'];
-    if (!isset($colleges[$collegeId])) {
-        $colleges[$collegeId] = array(
-            'college_id' => $collegeId,
-            'college_name' => $row['college_name'],
-            'address' => $row['address'],
-            'phone_number' => $row['phone_number'],
-            'email' => $row['email'],
-            'establishment_date' => $row['establishment_date'],
-            'college_type' => $row['college_type'],
-            'authority_name' => $row['authority_name'],
-            'courses' => array()
+if (mysqli_num_rows($results) > 0) {
+    $college_data = mysqli_fetch_assoc($results);
+
+    $courseCollData = array();
+    while ($row = mysqli_fetch_assoc($results)) {
+        $courseCollData[] = array(
+            'course_code' => $row['course_code'],
+            'course_name' => $row['course_name'],
+            'begins_at' => $row['begins_at'],
+            'duration' => $row['duration'],
+            'admission_fee' => $row['admission_fee'],
+            'fee_structure' => $row['fee_structure']
         );
     }
-    $colleges[$collegeId]['courses'][] = array(
-        'course_code' => $row['course_code'],
-        'course_name' => $row['course_name'],
-        'begins_at' => $row['begins_at'],
-        'duration' => $row['duration'],
-        'admission_fee' => $row['admission_fee'],
-        'fee_structure' => $row['fee_structure']
-    );
-}
 
-// Close the database connection
-mysqli_close($con);
-?>
- <?php include "../admin/admintemplate.php"?>
+    mysqli_close($con);
+}?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Colleges</title>
     <style>
-        table {
-            border-collapse: collapse;
-        }
-        table th, table td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-        .toggle-data {
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        .hidden-data {
+        /* Add your CSS styling here */
+        .college-details {
             display: none;
+        }
+        .toggle-symbol {
+            cursor: pointer;
+            font-size: 1.5em; /* Increase the font size */
         }
     </style>
     <script>
-        function toggleData(elementId) {
-            var element = document.getElementById(elementId);
-            if (element.style.display === "none") {
-                element.style.display = "block";
+        // Add your JavaScript code here
+        function toggleDetails(id) {
+            var details = document.getElementById('college-details-' + id);
+            var symbol = document.getElementById('symbol' + id);
+
+            if (details.style.display === "none") {
+                details.style.display = "block";
             } else {
-                element.style.display = "none";
+                details.style.display = "none";
             }
         }
     </script>
-    
 </head>
 
 <body>
     <h1>Colleges:</h1>
 
-    <?php foreach ($colleges as $college) : ?>
-        <h2>
-            <span class="toggle-data" onclick="toggleData('data-<?= $college['college_id']; ?>')">&#9658;</span>
-            <?= $college['college_name']; ?>
-        </h2>
-        <div id="data-<?= $college['college_id']; ?>" class="hidden-data">
-            <p><strong>Address:</strong> <?= $college['address']; ?></p>
-            <p><strong>Phone Number:</strong> <?= $college['phone_number']; ?></p>
-            <p><strong>Email:</strong> <?= $college['email']; ?></p>
-            <p><strong>Establishment Date:</strong> <?= $college['establishment_date']; ?></p>
-            <p><strong>College Type:</strong> <?= $college['college_type']; ?></p>
-            <p><strong>Authority Name:</strong> <?= $college['authority_name']; ?></p>
+    <?php if (isset($results) && count($college_data) > 0): ?>
+        <?php $previous_college_id = null; ?>
+        <?php foreach ($results as $result): ?>
+            <?php if ($result['college_id'] !== $previous_college_id): ?>
+                <?php if ($previous_college_id !== null): ?>
+                    </table>
+                    <form action="../college/process_college.php" method="post">
+                        <input type="hidden" name="college_id" value="<?= $previous_college_id; ?>">
+                        <button type="submit" name="status" value="approved">Approve</button>
+                        <button type="submit" name="status" value="rejected">Reject</button>
+                    </form>
+                </div>
+                <?php $courseCollData = []; ?>
+            <?php endif; ?>
+            <div class="college">
+                <p>
+                    <span class="toggle-symbol" id="symbolcollege<?= $result['college_id']; ?>" onclick="toggleDetails('college<?= $result['college_id']; ?>')">&#9658;</span>
+                    <strong><?= $result['college_name']; ?></strong>
+                </p>
+                <div class="college-details" id="college-details-college<?= $result['college_id']; ?>">
+                    <p>Address: <?= $result['address']; ?></p>
+                    <p>Phone Number: <?= $result['phone_number']; ?></p>
+                    <p>Email: <?= $result['email']; ?></p>
+                    <p>Establishment Date: <?= $result['establishment_date']; ?></p>
 
-            <table>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Begins At</th>
-                    <th>Duration</th>
-                    <th>Admission Fee</th>
-                    <th>Fee Structure</th>
-                </tr>
-                <?php foreach ($college['courses'] as $course) : ?>
-                    <tr>
-                        <td><?= $course['course_code']; ?></td>
-                        <td><?= $course['course_name']; ?></td>
-                        <td><?= $course['begins_at']; ?></td>
-                        <td><?= $course['duration']; ?></td>
-                        <td><?= $course['admission_fee']; ?></td>
-                        <td><?= $course['fee_structure']; ?></td>
-                    </tr>
+                    <h2>Facilities</h2>
+                    <p>Campus Size: <?= $result['campus_size']; ?></p>
+                    <p>Number of Classrooms: <?= $result['number_of_classrooms']; ?></p>
+                    <p>Number of Labs: <?= $result['number_of_labs']; ?></p>
+                    <p>Number of Libraries: <?= $result['number_of_libraries']; ?></p>
+                    <p>Number of Hostels: <?= $result['number_of_hostels']; ?></p>
+
+                    <table>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Begins At</th>
+                            <th>Duration</th>
+                            <th>Admission Fee</th>
+                            <th>Fee Structure</th>
+                        </tr>
+                        <?php $previous_college_id = $result['college_id']; ?>
+                    <?php endif; ?>
+                    <?php $courseCollData[] = $result; ?>
                 <?php endforeach; ?>
-            </table>
-        </div>
-        <br>
-    <?php endforeach; ?>
+                <?php if ($previous_college_id !== null): ?>
+                    </table>
+                    
+                </div>
+            <?php endif; ?>
+            </div>
+    <?php else: ?>
+        <p>No college data found.</p>
+    <?php endif; ?>
 </body>
 </html>

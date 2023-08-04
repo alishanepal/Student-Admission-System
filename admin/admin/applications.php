@@ -1,94 +1,129 @@
 <?php
-require_once "admintemplate.php";
 session_start();
+require '../../connection.php';
+include "admintemplate.php";
 
-// Retrieve stored records from the session
-$records = $_SESSION['records'] ?? [];
+// Fetch data from colleges, facilities, courses, and course_coll_relation tables
+$query = "
+    SELECT 
+        c.*, 
+        f.*, 
+        cr.*, 
+        cc.*
+    FROM colleges AS c
+    JOIN facilities AS f ON c.college_id = f.college_id
+    JOIN course_coll_relation AS cr ON c.college_id = cr.college_id
+    JOIN courses AS cc ON cr.course_id = cc.course_id
+    WHERE c.status = 'pending'"; 
 
-// Output the records
-echo "<h1>New Applications:</h1>";
+$results = mysqli_query($con, $query);
 
-foreach ($records as $index => $record) {
-    echo "<div class='record-container'>";
-    echo "<div id='record-$index'>";
-    echo "<h3>College: " . $record['collegeName'] . "</h3>";
-    echo "<button onclick='showFullForm($index)'>View</button>";
-    echo "</div>";
+if (mysqli_num_rows($results) > 0) {
+    $college_data = mysqli_fetch_assoc($results);
 
-    echo "<div id='full-form-$index' class='full-form' style='display: none;'>";
+    $courseCollData = array();
+    while ($row = mysqli_fetch_assoc($results)) {
+        $courseCollData[] = array(
+            'course_code' => $row['course_code'],
+            'course_name' => $row['course_name'],
+            'begins_at' => $row['begins_at'],
+            'duration' => $row['duration'],
+            'admission_fee' => $row['admission_fee'],
+            'fee_structure' => $row['fee_structure']
+        );
+    }
 
-    echo "<table>";
-    echo "<tr><th>Field</th><th>Value</th></tr>";
-    foreach ($record as $key => $value) {
-        if ($key === 'courses') {
-            echo "<tr><td>$key</td><td>";
-            echo "<ul>";
-            foreach($record['courses'] as $course) {
-                echo "<li>Course Code: " . $course['courseCode'] . "</li>";
-                echo "<li>Course Name: " . $course['courseName'] . "</li>";
-                echo "<li>Begins At: " . $course['beginsAt'] . "</li>";
-                echo "<li>Duration: " . $course['duration'] . "</li>";
-                echo "<li>Admission Fee: " . $course['admissionFee'] . "</li>";
-                echo "<li>Fee Structure: " . $course['feeStructure'] . "</li>";
-                echo "<br>";
-            }
-            echo "</ul>";
-            echo "</td></tr>";
-        } else {
-            echo "<tr><td>$key</td><td>$value</td></tr>";
+    mysqli_close($con);
+}?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colleges</title>
+    <style>
+        /* Add your CSS styling here */
+        .college-details {
+            display: none;
         }
-    }
-    echo "</table>";
+        .toggle-symbol {
+            cursor: pointer;
+            font-size: 1.5em; /* Increase the font size */
+        }
+    </style>
+    <script>
+        // Add your JavaScript code here
+        function toggleDetails(id) {
+            var details = document.getElementById('college-details-' + id);
+            var symbol = document.getElementById('symbol' + id);
 
-    echo "<form method='post' action='../college/del_approv.php'>";
-    echo "<input type='hidden' name='index' value='$index'>";
-    echo "<button type='submit' name='action' value='approve'>Approve</button>";
-    echo "<button type='submit' name='action' value='delete' onclick='return confirmDelete($index)'>Delete</button>";
-    echo "</form>";
+            if (details.style.display === "none") {
+                details.style.display = "block";
+            } else {
+                details.style.display = "none";
+            }
+        }
+    </script>
+</head>
 
-    echo "<button onclick='hideFullForm($index)' class='close-button'>Close</button>";
-    echo "</div>";
+<body>
+    <h1>Colleges:</h1>
 
-    echo "</div>";
-    echo "<hr>";
-}
+    <?php if (isset($results) && count($college_data) > 0): ?>
+        <?php $previous_college_id = null; ?>
+        <?php foreach ($results as $result): ?>
+            <?php if ($result['college_id'] !== $previous_college_id): ?>
+                <?php if ($previous_college_id !== null): ?>
+                    </table>
+                    <form action="../college/process_college.php" method="post">
+                        <input type="hidden" name="college_id" value="<?= $previous_college_id; ?>">
+                        <button type="submit" name="status" value="approved">Approve</button>
+                        <button type="submit" name="status" value="rejected">Reject</button>
+                    </form>
+                </div>
+                <?php $courseCollData = []; ?>
+            <?php endif; ?>
+            <div class="college">
+                <p>
+                    <span class="toggle-symbol" id="symbolcollege<?= $result['college_id']; ?>" onclick="toggleDetails('college<?= $result['college_id']; ?>')">&#9658;</span>
+                    <strong><?= $result['college_name']; ?></strong>
+                </p>
+                <div class="college-details" id="college-details-college<?= $result['college_id']; ?>">
+                    <p>Address: <?= $result['address']; ?></p>
+                    <p>Phone Number: <?= $result['phone_number']; ?></p>
+                    <p>Email: <?= $result['email']; ?></p>
+                    <p>Establishment Date: <?= $result['establishment_date']; ?></p>
 
-?>
+                    <h2>Facilities</h2>
+                    <p>Campus Size: <?= $result['campus_size']; ?></p>
+                    <p>Number of Classrooms: <?= $result['number_of_classrooms']; ?></p>
+                    <p>Number of Labs: <?= $result['number_of_labs']; ?></p>
+                    <p>Number of Libraries: <?= $result['number_of_libraries']; ?></p>
+                    <p>Number of Hostels: <?= $result['number_of_hostels']; ?></p>
 
-<style>
-    .record-container {
-        position: relative;
-    }
-
-    .full-form {
-        margin-top: 10px;
-    }
-
-    .close-button {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-    }
-</style>
-
-<script>
-    function showFullForm(index) {
-        var recordDiv = document.getElementById('record-' + index);
-        var fullFormDiv = document.getElementById('full-form-' + index);
-
-        recordDiv.style.display = 'none';
-        fullFormDiv.style.display = 'block';
-    }
-
-    function hideFullForm(index) {
-        var recordDiv = document.getElementById('record-' + index);
-        var fullFormDiv = document.getElementById('full-form-' + index);
-
-        recordDiv.style.display = 'block';
-        fullFormDiv.style.display = 'none';
-    }
-
-    function confirmDelete(index) {
-        return confirm('Are you sure you want to delete this record?');
-    }
-</script>
+                    <table>
+                        <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Begins At</th>
+                            <th>Duration</th>
+                            <th>Admission Fee</th>
+                            <th>Fee Structure</th>
+                        </tr>
+                        <?php $previous_college_id = $result['college_id']; ?>
+                    <?php endif; ?>
+                    <?php $courseCollData[] = $result; ?>
+                <?php endforeach; ?>
+                <?php if ($previous_college_id !== null): ?>
+                    </table>
+                    <form action="../college/process_college.php" method="post">
+                        <input type="hidden" name="college_id" value="<?= $previous_college_id; ?>">
+                        <button type="submit" name="status" value="approved">Approve</button>
+                        <button type="submit" name="status" value="rejected">Reject</button>
+                    </form>
+                </div>
+            <?php endif; ?>
+            </div>
+    <?php else: ?>
+        <p>No college data found.</p>
+    <?php endif; ?>
+</body>
+</html>
