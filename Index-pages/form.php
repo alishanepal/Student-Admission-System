@@ -23,14 +23,17 @@ if (mysqli_num_rows($userResult) > 0) {
     $userData = mysqli_fetch_assoc($userResult);
 
     // Now, you can use the $userData array to set the default values for the form fields.
+    $status = $userData['status'];
     $collegeID=$userData['college_id'];
     $courseID=$userData['course_id'];
+    $studentID=$userData['student_id'];
     $fullName = $userData['full_name'];
     $birthDate = $userData['birth_date'];
     $email = $userData['email'];
     $phoneNumber = $userData['phone_number'];
     $gender = $userData['gender'];
     $postCode = $userData['post_code'];
+    $status=   $userData['status'];
     $fatherName = $userData['father_name'];
     $fatherOccupation = $userData['father_occupation'];
     $fatherAddress = $userData['father_address'];
@@ -41,22 +44,14 @@ if (mysqli_num_rows($userResult) > 0) {
     $motherAddress = $userData['mother_address'];
     $motherMobile = $userData['mother_mobile'];
     $motherEmail = $userData['mother_email'];
-    $qualification = $userData['qualification'];
+    $qualification = $userData['highest_qualification'];
     $instituteName = $userData['institute_name'];
     $yearOfPassing = $userData['year_of_passing'];
     $advertisement = $userData['advertisement_source'];
     $specialNeeds = $userData['special_needs'];
     $specialNeedsDescription = $userData['special_needs_description'];
     $benefitToUNI = $userData['reasons_for_application'];
-
-
-    $collegeNameQuery = "SELECT college_name FROM colleges WHERE college_id = '$collegeID'";
-    $collegeNameResult = mysqli_query($con, $collegeNameQuery);
-    if ($collegeNameRow = mysqli_fetch_assoc($collegeNameResult)) {
-        $collegeName = $collegeNameRow['college_name'];}
-
-    } else {
-    } ?>
+ } ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -152,6 +147,8 @@ if (mysqli_num_rows($userResult) > 0) {
         <div class="details">
             <h2>PERSONAL DETAILS</h2>
 
+            <input type="hidden" name="student_id" value="<?php echo $studentID; ?>">
+    
             <div class="field">
                 <div class="input-field">
                     <label for="fullName">Full Name</label>
@@ -342,13 +339,26 @@ if (mysqli_num_rows($userResult) > 0) {
             </div>
 
             <?php
-            if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'Student') {
-                echo " 
-            <input type='submit' value='submit'>";
-            } else {
-                echo " please login as student";
-            }
-            ?>
+if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SESSION['usertype']) && $_SESSION['usertype'] == 'Student') {
+    if (mysqli_num_rows($userResult) <= 0) {
+        // If the form has not been submitted, show the "Submit" button
+        echo "<input type='submit' name='submit' value='submit'>";
+    } elseif ($status === 'pending' || $status === 'removed') {
+            // If the form has been submitted and status is pending or removed, show the "Update" button
+            echo "<input type='submit' name='update' value='Update'>";
+        } elseif ($status === 'approved') {
+            // If the form has been submitted and status is accepted, show a message
+            echo "This form has already been accepted.";
+        }
+    
+} else {
+    // If not logged in as a student, show a message
+    echo "Please log in as a student.";
+}
+?>
+
+
+
         </div>
         </form>
         </div>

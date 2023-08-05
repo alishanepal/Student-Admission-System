@@ -14,9 +14,9 @@
 	<p class="logo">M-SoftTech <span class="menu">☰</span></p>
 	<p class="logo1"> <span class="menu1">☰</span></p>
   <a href="adminDashboard.php" class="icon-a"><i class="fa fa-dashboard icons"></i>   Dashboard</a>
-  <a href="students_application.php"class="icon-a"><i class="fa fa-pie-chart icons"></i>Application</a>
-  <a href="students.php"class="icon-a"><i class="fa fa-list icons"></i>   Registered Colleges</a>
-  <a href="profile.php"class="icon-a"><i class="fa fa-shopping-bag icons"></i> profile</a>
+  <a href="applications.php"class="icon-a"><i class="fa fa-pie-chart icons"></i>   College Application</a>
+  <a href="Registered_colleges.php"class="icon-a"><i class="fa fa-list icons"></i>   Registered Colleges</a>
+  <a href="#"class="icon-a"><i class="fa fa-shopping-bag icons"></i>   Orders</a>
   <a href="#"class="icon-a"><i class="fa fa-tasks icons"></i>   Inventory</a>
   <a href="#"class="icon-a"><i class="fa fa-user icons"></i>   Accounts</a>
   <a href="#"class="icon-a"><i class="fa fa-list-alt icons"></i>   Tasks</a>

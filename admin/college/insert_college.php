@@ -44,8 +44,8 @@ for ($i = 0; $i < count($courseCode); $i++) {
 }
 
 // Insert into colleges
-$query1 = "INSERT INTO `colleges` (`college_name`, `address`, `phone_number`, `email`, `establishment_date`, `college_type`, `authority_name`,`user_id`) 
-VALUES ('$collegeName', '$address', '$phoneNumber', '$email', '$year ', '$collegeType', '$authorityName','{$_SESSION['userid']}')";
+$query1 = "INSERT INTO `colleges` (`college_name`, `address`, `phone_number`, `email`, `establishment_date`, `college_type`,`courses_no`, `authority_name`,`user_id`) 
+VALUES ('$collegeName', '$address', '$phoneNumber', '$email', '$year ', '$collegeType','$numberOfCourses' '$authorityName','{$_SESSION['userid']}')";
 
  // Execute the query
  if (mysqli_query($con, $query1)) {

@@ -3,8 +3,10 @@ require('connection.php');
 session_start();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
     
     $collegeid = $_SESSION['college_id'];
+    $studentID=$_POST['student_id'];
     $courseid = $_POST['course_id'];
     $fullName = $_POST['fullName'];
     $birthDate = $_POST['birthDate'];
@@ -28,8 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $specialNeeds = $_POST['specialNeeds'];
     $specialNeedsDescription = $_POST['specialNeedsDescription'];
     $benefitToUNI = $_POST['benefit_to_UNI'];
-    
 
+
+    if (isset($_POST['submit'])) {
     // Retrieve college_id from colleges table based on college name
     $collegeQuery = "SELECT college_id FROM colleges WHERE college_id = '$collegeid'";
     $collegeResult = mysqli_query($con, $collegeQuery);
@@ -58,7 +61,7 @@ $query2 = "INSERT INTO family_details (student_id, father_name, father_occupatio
                                    mother_mobile, mother_email)
                                    VALUES ('$studentID', '$fatherName', '$fatherOccupation', '$fatherAddress',
                                    '$fatherMobile', '$fatherEmail', '$motherName', '$motherOccupation',
-                                   '$motherAddress', '$motherMobile', '$motherEmail')";
+                                   '$motherAddress', '$motherMobile', '$motherEmail')"; 
 mysqli_query($con, $query2);
 
 // Insert data into the "educational_background" table using the retrieved student ID
@@ -78,4 +81,33 @@ mysqli_close($con);
 // Redirect or show a success message to the user
 }
     }
-    ?>
+elseif (isset($_POST['update'])){
+
+        $query1 = "UPDATE students SET full_name = '$fullName', birth_date = '$birthDate', email = '$email',
+        phone_number = '$phoneNumber', gender = '$gender' WHERE student_id = '$studentID'";
+mysqli_query($con, $query1);
+
+// Update data in the "family_details" table
+$query2 = "UPDATE family_details SET father_name = '$fatherName', father_occupation = '$fatherOccupation',
+        father_address = '$fatherAddress', father_mobile = '$fatherMobile', father_email = '$fatherEmail',
+        mother_name = '$motherName', mother_occupation = '$motherOccupation', mother_address = '$motherAddress',
+        mother_mobile = '$motherMobile', mother_email = '$motherEmail' WHERE student_id = '$studentID'";
+mysqli_query($con, $query2);
+
+// Update data in the "educational_background" table
+$query3 = "UPDATE educational_background SET highest_qualification = '$qualification', institute_name = '$instituteName',
+        year_of_passing = '$yearOfPassing' WHERE student_id = '$studentID'";
+mysqli_query($con, $query3);
+
+// Update data in the "extended_details" table
+$query4 = "UPDATE extended_details SET advertisement_source = '$advertisement', special_needs = '$specialNeeds',
+        special_needs_description = '$specialNeedsDescription', reasons_for_application = '$benefitToUNI'
+        WHERE student_id = '$studentID'";
+mysqli_query($con, $query4);
+
+// Close the database connection
+mysqli_close($con);
+
+// Redirect or show a success message to the user
+}}
+?>
