@@ -1,11 +1,5 @@
 
-<body>
- <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
-  <style>
-    <?php include "../../CSS/header.css";  
-    ?>
-  </style>
-
+  <button class="button" onclick="popup('register-popup')">Add Admin</button>
   <div class="popup-container" id="register-popup">
     <div class="register popup">
       <form method="POST" action="addAdmin.php" onsubmit="return validateForm()">
@@ -43,12 +37,11 @@
     </div>
   </div>
 
-  <button onclick="popup('register-popup')">Add Admin</button>
 
-<script>
-     <?php include "../../JS/header.js" ?>
+
+<script  src="../../JS/header.js">
 </script>
- </body>
+
 
  <?php
 require('../../connection.php');

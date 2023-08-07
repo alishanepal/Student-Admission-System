@@ -28,7 +28,6 @@
 <body>
 
     <?php
-    session_start();
     require '../connection.php';
     include "collegetemplate.php";
 

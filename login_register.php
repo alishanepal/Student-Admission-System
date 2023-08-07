@@ -95,6 +95,8 @@ if (isset($_POST['login'])) {
                 $_SESSION['username'] = $user_row['username'];
                 $_SESSION['usertype']= $user_row['usertype'];
                 $_SESSION['userid']= $user_row['user_id'];
+                $_SESSION['usertype']= $user_row['usertype'];
+
 
                 if ($user_row['usertype'] == 'College') {
                     header("Location: College/students_application.php");

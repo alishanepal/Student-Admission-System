@@ -1,57 +1,3 @@
-<?php
-require('../connection.php');
-session_start();
-
-
-
-// Step 2: Retrieve the user's data from the database based on the user_id
-$userID = $_SESSION['userid'];
-$userQuery = "
-            SELECT 
-                s.*, 
-                fd.*, 
-                eb.*, 
-                ed.*
-            FROM students AS s
-            JOIN family_details AS fd ON s.student_id = fd.student_id
-            JOIN educational_background AS eb ON s.student_id = eb.student_id
-            JOIN extended_details AS ed ON s.student_id = ed.student_id
-            WHERE user_id = '$userID'";
-$userResult = mysqli_query($con, $userQuery);
-
-if (mysqli_num_rows($userResult) > 0) {
-    $userData = mysqli_fetch_assoc($userResult);
-
-    // Now, you can use the $userData array to set the default values for the form fields.
-    $status = $userData['status'];
-    $collegeID=$userData['college_id'];
-    $courseID=$userData['course_id'];
-    $studentID=$userData['student_id'];
-    $fullName = $userData['full_name'];
-    $birthDate = $userData['birth_date'];
-    $email = $userData['email'];
-    $phoneNumber = $userData['phone_number'];
-    $gender = $userData['gender'];
-    $postCode = $userData['post_code'];
-    $status=   $userData['status'];
-    $fatherName = $userData['father_name'];
-    $fatherOccupation = $userData['father_occupation'];
-    $fatherAddress = $userData['father_address'];
-    $fatherMobile = $userData['father_mobile'];
-    $fatherEmail = $userData['father_email'];
-    $motherName = $userData['mother_name'];
-    $motherOccupation = $userData['mother_occupation'];
-    $motherAddress = $userData['mother_address'];
-    $motherMobile = $userData['mother_mobile'];
-    $motherEmail = $userData['mother_email'];
-    $qualification = $userData['highest_qualification'];
-    $instituteName = $userData['institute_name'];
-    $yearOfPassing = $userData['year_of_passing'];
-    $advertisement = $userData['advertisement_source'];
-    $specialNeeds = $userData['special_needs'];
-    $specialNeedsDescription = $userData['special_needs_description'];
-    $benefitToUNI = $userData['reasons_for_application'];
- } ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -366,3 +312,57 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SES
 </body>
 
 </html>
+<?php
+require('../connection.php');
+session_start();
+
+
+
+// Step 2: Retrieve the user's data from the database based on the user_id
+$userID = $_SESSION['userid'];
+$userQuery = "
+            SELECT 
+                s.*, 
+                fd.*, 
+                eb.*, 
+                ed.*
+            FROM students AS s
+            JOIN family_details AS fd ON s.student_id = fd.student_id
+            JOIN educational_background AS eb ON s.student_id = eb.student_id
+            JOIN extended_details AS ed ON s.student_id = ed.student_id
+            WHERE user_id = '$userID'";
+$userResult = mysqli_query($con, $userQuery);
+
+if (mysqli_num_rows($userResult) > 0) {
+    $userData = mysqli_fetch_assoc($userResult);
+
+    // Now, you can use the $userData array to set the default values for the form fields.
+    $status = $userData['status'];
+    $collegeID=$userData['college_id'];
+    $courseID=$userData['course_id'];
+    $studentID=$userData['student_id'];
+    $fullName = $userData['full_name'];
+    $birthDate = $userData['birth_date'];
+    $email = $userData['email'];
+    $phoneNumber = $userData['phone_number'];
+    $gender = $userData['gender'];
+    $postCode = $userData['post_code'];
+    $status=   $userData['status'];
+    $fatherName = $userData['father_name'];
+    $fatherOccupation = $userData['father_occupation'];
+    $fatherAddress = $userData['father_address'];
+    $fatherMobile = $userData['father_mobile'];
+    $fatherEmail = $userData['father_email'];
+    $motherName = $userData['mother_name'];
+    $motherOccupation = $userData['mother_occupation'];
+    $motherAddress = $userData['mother_address'];
+    $motherMobile = $userData['mother_mobile'];
+    $motherEmail = $userData['mother_email'];
+    $qualification = $userData['highest_qualification'];
+    $instituteName = $userData['institute_name'];
+    $yearOfPassing = $userData['year_of_passing'];
+    $advertisement = $userData['advertisement_source'];
+    $specialNeeds = $userData['special_needs'];
+    $specialNeedsDescription = $userData['special_needs_description'];
+    $benefitToUNI = $userData['reasons_for_application'];
+ } ?>

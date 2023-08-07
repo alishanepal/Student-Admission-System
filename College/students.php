@@ -28,7 +28,6 @@
 <body>
 
     <?php
-    session_start();
     require '../connection.php';
     include "collegetemplate.php";
 
@@ -66,10 +65,10 @@
         }
     }
     ?>
-    
+     <h1>Student Information</h1>
     <?php if (isset($students) && count($students) > 0): ?>
         <?php foreach ($students as $student): ?>
-            <h1>Student Information</h1>
+           
             <h2>
                 <span class="toggle-data" onclick="toggleData('data-<?= $student['student_id']; ?>')">&#9658;</span>
                 <?= $student['full_name']; ?>

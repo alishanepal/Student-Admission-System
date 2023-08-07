@@ -2,26 +2,28 @@
 <html>
 <head>
 	<title></title>
-	<link rel="stylesheet" href="../CSS/template.css" />
+	<link rel="stylesheet" href="../CSS/template.css" type="text/css"/>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="../CSS/buttons.css" />
+  <link rel="stylesheet" href="../CSS/header.css">
 </head>
 
 
 <body>
 	
 	<div id="mySidenav" class="sidenav">
-	<p class="logo">M-SoftTech <span class="menu">☰</span></p>
+	<p class="logo">Dashboard<span class="menu">☰</span></p>
 	<p class="logo1"> <span class="menu1">☰</span></p>
-  <a href="adminDashboard.php" class="icon-a"><i class="fa fa-dashboard icons"></i>   Dashboard</a>
-  <a href="students_application.php"class="icon-a"><i class="fa fa-pie-chart icons"></i>Application</a>
-  <a href="students.php"class="icon-a"><i class="fa fa-list icons"></i>   Registered Colleges</a>
-  <a href="profile.php"class="icon-a"><i class="fa fa-shopping-bag icons"></i> profile</a>
-  <a href="#"class="icon-a"><i class="fa fa-tasks icons"></i>   Inventory</a>
+   <a href="collegeDashboard.php" class="icon-a">   <i class="uil uil-dashboard"></i>   Dashboard</a>
+  <a href="students_application.php"class="icon-a">      <i class="uil uil-chart-pie"></i>   student Application</a>
+  <a href="students.php"class="icon-a"><i class="uil uil-list-ul"></i>   Registered Students</a>
+ <!--  <a href="Profile.php"class="icon-a"><i class="fa fa-shopping-bag icons"></i> profile</a>
+ <a href="#"class="icon-a"><i class="fa fa-tasks icons"></i>   Inventory</a>
   <a href="#"class="icon-a"><i class="fa fa-user icons"></i>   Accounts</a>
   <a href="#"class="icon-a"><i class="fa fa-list-alt icons"></i>   Tasks</a>
   <a href="#"class="icon-a"><i class="fa fa-bell icons"></i>   Notification</a>
-  <a href="#"class="icon-a"><i class="fa fa-circle icons"></i>   Icons</a>
+  <a href="#"class="icon-a"><i class="fa fa-circle icons"></i>   Icons</a>-->
 
 
 </div>
@@ -34,30 +36,25 @@
 </div>
 	
 	<div class="col-div-6">
-		<i class="fa fa-search search-icon"></i>
+		
 
 		
-		<i class="fa fa-bell noti-icon"></i>
+		
 		<div class="notification-div">
 			<p class="noti-head">Notification <span>2</span></p>
 			<hr class="hr" />
-			<p>Your Order is Placed
-				<span>Lorem Ipsum is simply dummy </span>
-			</p>
-			<p>Your Order is Placed
-				<span>Lorem Ipsum is simply dummy </span>
-			</p>
-			<p>Your Order is Placed
-				<span>Lorem Ipsum is simply dummy </span>
-			</p>
+			
 		</div>
 	<div class="profile">
 
-		<p>Manoj Adhikari <i class="fa fa-ellipsis-v dots" aria-hidden="true"></i></p>
+		
+	<p>	
+    <?php
+   session_start();
+        echo $_SESSION['username']?><i class="fa fa-ellipsis-v dots" aria-hidden="true"></i></p>
 		<div class="profile-div">
-			<p><i class="fa fa-user"></i>   Profile</p>
-			<p><i class="fa fa-cogs"></i>   Settings</p>
-			<p><i class="fa fa-power-off"></i>   Log Out</p>
+			<p><i class="fa fa-user"></i> <a href="../Index-pages/index.php">Home</a></p>
+			<p><i class="fa fa-power-off"></i><a href="../logout.php">   Log Out</a></p>
 		</div>
 	</div>
 </div>
@@ -68,9 +65,8 @@
 	<br/>
 	
 	
-	<div class="clearfix"></div>
-	<br/>
-    
+	
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
@@ -110,10 +106,13 @@ $(document).ready(function(){
   $(".noti-icon").click(function(){
     $(".notification-div").toggle();
   });
+
+
+
   
 });
 </script>
-</body>
+
 
 
 </html>

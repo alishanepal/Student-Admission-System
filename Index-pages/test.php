@@ -1,1 +1,1 @@
-<?php include "../admin/admintemplate.php"?>
+<?php include "../admintemplate.php"?>

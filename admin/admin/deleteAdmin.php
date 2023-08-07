@@ -7,9 +7,10 @@ if (isset($_GET['id'])) {
     // Delete the admin record based on the admin_id
     $deleteQuery = "DELETE FROM `admin_login` WHERE `admin_id` = '$adminId'";
     if (mysqli_query($con, $deleteQuery)) {
-        // Deletion successful
-        // Redirect back to the admin data page
-        header("Location: admins_data.php");
+        echo "
+                <script>alert(' deleted Successfully');
+                window.location.href='adminDashboard.php';
+                </script>";
         exit;
     } else {
         echo "Failed to delete admin. Please try again.";

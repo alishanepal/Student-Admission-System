@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 require '../connection.php';
 include "collegetemplate.php";
 
@@ -25,12 +25,13 @@ if (mysqli_num_rows($results) > 0) {
     $previous_college_id = null;
     while ($row = mysqli_fetch_assoc($results)) {
         $college_id = $row['college_id'];
-        $courseID=$row['relation_id'];
+        $relationID = $row['relation_id'];
 
         if ($college_id !== $previous_college_id) {
             if ($previous_college_id !== null) {
                 echo '</table>';
                 echo '</div>';
+                echo '</div>'; // Move the closing tags here to close the previous college details
             }
             echo '<div class="college">';
             echo '<div class="college-details" id="college-details-college' . $college_id . '">';
@@ -45,6 +46,8 @@ if (mysqli_num_rows($results) > 0) {
             echo '<p>Number of Labs: ' . $row['number_of_labs'] . '</p>';
             echo '<p>Number of Libraries: ' . $row['number_of_libraries'] . '</p>';
             echo '<p>Number of Hostels: ' . $row['number_of_hostels'] . '</p>';
+            echo '<button class="button"><a class=updateBtn href="addCourses.php?addid=' . $college_id . '">ADD courses</a></button>';
+            
             echo '<table>';
             echo '<tr><th>Course Code</th><th>Course Name</th><th>Begins At</th><th>Duration</th><th>Admission Fee</th><th>Fee Structure</th><th>Actions</th></tr>';
         }
@@ -57,14 +60,15 @@ if (mysqli_num_rows($results) > 0) {
         echo '<td>' . $row['admission_fee'] . '</td>';
         echo '<td>' . $row['fee_structure'] . '</td>';
         echo '<td>';
-        echo '<button class="button"><a href="editCourses.php?updateid='.$courseID.'"> Edit</a></button>';
-        echo '<button class="button"><a href="deleteCourses.php?deleteid='.$courseID.'">Delete</a></button>';
+        echo '<button class="button1"><a class="updateBtn" href="editCourses.php?updateid=' . $relationID . '"> Edit</a></button>';
+        echo '<button class="button2"><a class="deleteBtn"href="deleteCourses.php?deleteid=' . $relationID . '">Delete</a></button>';
         echo '</td>';
         echo '</tr>';
 
         $previous_college_id = $college_id;
     }
 
+    // Close the last college details
     if ($previous_college_id !== null) {
         echo '</table>';
         echo '</div>';
@@ -75,9 +79,5 @@ if (mysqli_num_rows($results) > 0) {
 } else {
     echo '<p>No college data found.</p>';
 }
-?>
-<body>
-    <style>
 
-    </style>
-</body>
+?>

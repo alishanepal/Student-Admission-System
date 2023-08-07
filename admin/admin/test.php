@@ -34,37 +34,39 @@ if (mysqli_num_rows($results) > 0) {
 
     mysqli_close($con);
 }
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Colleges</title>
     <style>
-        /* Add your CSS styling here */
-        .college-details {
-            display: none;
+        table {
+            border-collapse: collapse;
         }
-        .toggle-symbol {
-            display: inline-block;
-            width: 1em;
-            text-align: center;
+        table th, table td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+        .toggle-data {
             cursor: pointer;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .hidden-data {
+            display: none;
         }
     </style>
     <script>
-        // Add your JavaScript code here
-        function toggleDetails(id) {
-            var details = document.getElementById(id);
-            var symbol = document.getElementById('symbol' + id);
-
-            if (details.style.display === "none") {
-                details.style.display = "block";
-                symbol.innerHTML = "&#9660;"; // Down-pointing triangle
+        function toggleData(elementId) {
+            var element = document.getElementById(elementId);
+            if (element.style.display === "none") {
+                element.style.display = "block";
             } else {
-                details.style.display = "none";
-                symbol.innerHTML = "&#9658;"; // Right-pointing triangle
+                element.style.display = "none";
             }
         }
     </script>
+    
 </head>
 
 <body>
@@ -72,19 +74,50 @@ if (mysqli_num_rows($results) > 0) {
 
     <?php if (isset($results) && count($college_data) > 0): ?>
         <?php foreach ($results as $result): ?>
-            <div class="college">
-                <p>
-                    <span class="toggle-symbol" id="symbolcollege<?= $result['college_id']; ?>" onclick="toggleDetails('college<?= $result['college_id']; ?>')">&#9658;</span>
-                    College Name: <span style="cursor: pointer;" onclick="toggleDetails('college<?= $result['college_id']; ?>')"><?= $result['college_name']; ?></span>
-                </p>
-                <div class="college-details" id="college<?= $result['college_id']; ?>">
-                    <!-- College details content -->
-                </div>
-            </div>
+            <h2>
+                <span class="toggle-data" onclick="toggleData('data-<?= $college_data['college_id']; ?>')">&#9658;</span>
+                <?= $college_data['college_name']; ?>
+            </h2>
+            
+           
+        <p>College Name: <?= $college_data['college_name']; ?></p>
+        <p>Address: <?= $college_data['address']; ?></p>
+        <p>Phone Number: <?= $college_data['phone_number']; ?></p>
+        <p>Email: <?= $college_data['email']; ?></p>
+      <p> establishment_date: <?=$college_data['establishment_date']; ?></p>
+
+        <h2>Facilities</h2>
+        <p>Campus Size: <?= $college_data['campus_size']; ?></p>
+        <p>Number of Classrooms: <?= $college_data['number_of_classrooms']; ?></p>
+        <p>Number of Labs: <?= $college_data['number_of_labs']; ?></p>
+        <p>Number of Libraries: <?= $college_data['number_of_libraries']; ?></p>
+        <p>Number of Hostels: <?= $college_data['number_of_hostels']; ?></p>
+     
+
+        <table>
+        <tr>
+            <th>Course Code</th>
+            <th>Course Name</th>
+            <th>Begins At</th>
+            <th>Duration</th>
+            <th>Admission Fee</th>
+            <th>Fee Structure</th>
+        </tr>
+        <?php foreach ($courseCollData as $courseColl) : ?>
+            <tr>
+                <td><?= $courseColl['course_code']; ?></td>
+                <td><?= $courseColl['course_name']; ?></td>
+                <td><?= $courseColl['begins_at']; ?></td>
+                <td><?= $courseColl['duration']; ?></td>
+                <td><?= $courseColl['admission_fee']; ?></td>
+                <td><?= $courseColl['fee_structure']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </table> <!-- Added closing table tag -->
         <?php endforeach; ?>
         
     <?php else: ?>
         <p>No college data found.</p>
-    <?php endif; ?>
+        <?php endif; ?>
 </body>
 </html>

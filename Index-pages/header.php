@@ -10,8 +10,7 @@ session_start();
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Unicons -->
-  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
-</head>
+  </head>
 
 <body>
   <style>
@@ -29,21 +28,28 @@ session_start();
         <li><a href="contact.php">Contact Us</a></li>
       </ul>
       <?php
-      if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true) {
-        echo "<div class='username'> 
-            <span class='username'>Welcome   {$_SESSION['username']}</span>
-            
-            <br>
-            <div class='logout'>
-              <a href='../logout.php'>Logout</a>
-            </div>
-          </div>";
-      } else {
-        echo "
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    echo "
     <button type='button' class='button' onclick='popup(\"login-popup\")'>Login</button>
     <button type='button' class='button' onclick='popup(\"register-popup\")'>Signup</button>";
-      }
-      ?>
+} elseif (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true && $_SESSION['usertype'] === 'college') { 
+    echo "
+    <button class='button'>
+        <a href='../College/collegetemplate.php'>Dashboard</a>
+    </button>";
+} elseif ($_SESSION['usertype'] === 'student') { 
+    echo "
+    <button class='button'>
+        <a href='../Student/Studenttemplate.php'>Dashboard</a>
+    </button>";
+} elseif ($_SESSION['usertype'] === 'admin') { 
+    echo "
+    <button class='button'>
+        <a href='../admin/admin/adminDashboard.php'>Dashboard</a>
+    </button>";
+}
+?>
+
 
 
     </nav>
@@ -111,7 +117,7 @@ session_start();
         </div>
 
         <div class="input_box">
-          <select name="usertype">
+          <select name="usertype" required>
             <option disabled selected hidden><i class="uil uil-user-check"></i>User Type</option>
             <option><i class="uil uil-book-reader"></i>Student</option>
             <option><i class="uil uil-university"></i>College</option>

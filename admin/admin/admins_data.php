@@ -1,46 +1,43 @@
 <?php
-require('../../connection.php');
+require '../../connection.php';
 
-function fetchAdminData($con)
-{
-    $query = "SELECT * FROM `admin_login`";
-    $result = mysqli_query($con, $query);
-
-    $output = '';
-    while ($row = mysqli_fetch_assoc($result)) {
-        $adminId = $row['admin_id'];
-        $output .= "<tr>";
-        $output .= "<td>{$row['fullname']}</td>";
-        $output .= "<td>{$row['username']}</td>";
-        $output .= "<td>{$row['email']}</td>";
-        $output .= "<td>";
-        $output .= "<a href='updateAdmin.php?id={$adminId}' class='button'>Update</a>";
-        $output .= "<a href='deleteAdmin.php?id={$adminId}' class='button'>Delete</a>";
-        $output .= "</td>";
-        $output .= "</tr>";
-    }
-
-    return $output;
-}
+// Fetch data from the admin_login table
+$query = "SELECT *FROM admin_login";
+$results = mysqli_query($con, $query);
 
 ?>
 
-<body>
-    <!-- HTML and other code -->
+<link rel="stylesheet" href="../../CSS/buttons.css" />
+<h2>Admin Data</h2>
 
-    <table>
-        <thead>
+<?php if (mysqli_num_rows($results) > 0): ?>
+    <table border="1">
+        <tr>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+        <?php while ($row = mysqli_fetch_assoc($results)): 
+            $id=$row['admin_id'];?>
             <tr>
-                <th>Full Name</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php echo fetchAdminData($con); ?>
-        </tbody>
-    </table>
+                <td><?php echo $row['fullname']; ?></td>
+                <td><?php echo $row['username']; ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td>
+    <button class="button1"><a href="editAdmin.php?id=<?php echo $id; ?>" class="updateBtn">Edit</a></button>
+    <button class="button2"><a href="deleteAdmin.php?id=<?php echo $id; ?>" class="deleteBtn">Delete</a></button>
+</td>
 
-    <!-- JavaScript and other code -->
+            </tr>
+        <?php endwhile; ?>
+    </table>
+<?php else: ?>
+    <p>No data found.</p>
+<?php endif; ?>
+
 </body>
+</html>
+
+<?php
+?>
