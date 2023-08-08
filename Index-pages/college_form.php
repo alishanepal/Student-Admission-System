@@ -1,6 +1,7 @@
 <?php
-session_start();
+
 require '../connection.php';
+include('header.php');
 
 $userID = $_SESSION['userid'];
 // Fetch data from colleges, facilities, courses, and course_coll_relation tables
@@ -63,11 +64,6 @@ if (mysqli_num_rows($collegeResult) > 0) {
         <?php include "../CSS/college_form.css" ?>
     </style>
 </head>
-
-<body>
-
-
-    <?php include('header.php'); ?>
 
     <section>
         <form id="collegeAffiliationForm" action="../admin/college/insert_college.php" method="POST"><br><br>
@@ -144,16 +140,16 @@ value="<?php echo isset($collegeName) ? $collegeName: ''; ?>"><br>
 
                     <div class="record details">
 
-                        <h1>Affiliation</h1>
-                        <p>The college is affiliated with the following universities and institutions:</p>
+                        <!-- <h1>Affiliation</h1> -->
+                        <!-- <p>The college is affiliated with the following universities and institutions:</p> -->
 
-                        <label for="affiliation1">Affiliation 1:</label>
-                        <input type="text" id="affiliation1" name="affiliation1" required
-                        value="<?php echo isset($affiliation1) ? $affiliation1: ''; ?>"><br>
-                        <label for="affiliation2">Affiliation 2:</label>
-                        <input type="text" id="affiliation2" name="affiliation2"
-                        value="<?php echo isset($affiliation2) ? $affiliation2: ''; ?>"><br>
-                    </div>
+                        <!-- <label for="affiliation1">Affiliation 1:</label> -->
+                        <!-- <input type="text" id="affiliation1" name="affiliation1" required -->
+                        <!-- value="<?php echo isset($affiliation1) ? $affiliation1: ''; ?>"><br> -->
+                        <!-- <label for="affiliation2">Affiliation 2:</label> -->
+                        <!-- <input type="text" id="affiliation2" name="affiliation2" -->
+                        <!-- value="<?php echo isset($affiliation2) ? $affiliation2: ''; ?>"><br> -->
+                    <!-- </div> -->
 
                     <span class="title">Declaration and Signature</span>
                     <div class="declare details">
@@ -176,7 +172,7 @@ value="<?php echo isset($collegeName) ? $collegeName: ''; ?>"><br>
                         echo " 
                         <input type='submit' value='Submit' onclick='return validateForm()'>";
                     } else {
-                        echo " please login as College to submit the form";
+                        echo " <b>please login as College to submit the form</b>";
                     }
                     ?>
 

@@ -27,30 +27,31 @@ session_start();
         <li><a href="form.php">Admission Form </a></li>
         <li><a href="contact.php">Contact Us</a></li>
       </ul>
-      <?php
+  <?php
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     echo "
     <button type='button' class='button' onclick='popup(\"login-popup\")'>Login</button>
     <button type='button' class='button' onclick='popup(\"register-popup\")'>Signup</button>";
-} elseif (isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true && $_SESSION['usertype'] === 'college') { 
-    echo "
-    <button class='button'>
-        <a href='../College/collegetemplate.php'>Dashboard</a>
-    </button>";
-} elseif ($_SESSION['usertype'] === 'student') { 
-    echo "
-    <button class='button'>
-        <a href='../Student/Studenttemplate.php'>Dashboard</a>
-    </button>";
-} elseif ($_SESSION['usertype'] === 'admin') { 
-    echo "
-    <button class='button'>
-        <a href='../admin/admin/adminDashboard.php'>Dashboard</a>
-    </button>";
+}else {
+  if (isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'College') { 
+      echo "
+      <button class='button'>
+          <a href='../College/collegeDashboard.php' style='text-decoration: none; color: white;'>Dashboard</a>
+      </button>";
+  } elseif (isset($_SESSION['usertype']) && $_SESSION['usertype'] === 'Student') { 
+      echo "
+      <button class='button'>
+          <a href='../Student/StudentDashboard.php' style='text-decoration: none; color: white;'>Dashboard</a>
+      </button>";
+  } else { 
+      echo "
+      <button class='button'>
+          <a href='../admin/admin/adminDashboard.php' style='text-decoration: none; color: white;'>Dashboard</a>
+      </button>";
+  }
 }
+
 ?>
-
-
 
     </nav>
   </header>

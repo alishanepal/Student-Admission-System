@@ -24,7 +24,7 @@
   transition: background-color 0.3s ease;
 }
 .updateBtn, .deleteBtn{
-        text-decoration: none; /* Remove underline */
-        color: white; /* Change text color to white */
+        text-decoration: none;
+        color: white;
       
 }

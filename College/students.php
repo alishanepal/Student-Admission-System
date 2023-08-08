@@ -1,31 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Information</title>
 
-    <script>
-        function toggleData(studentId) {
-            var dataDiv = document.getElementById(studentId);
-            if (dataDiv.style.display === "none") {
-                dataDiv.style.display = "block";
-            } else {
-                dataDiv.style.display = "none";
-            }
-        }
-    </script>
-    <style>
-        .toggle-data {
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-        .hidden-data {
-            display: none;
-        }
-    </style>
- 
-</head>
-<body>
 
     <?php
     require '../connection.php';

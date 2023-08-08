@@ -78,9 +78,16 @@ mysqli_query($con, $query4);
 // Close the database connection
 mysqli_close($con);
 
+echo "
+<script>
+alert('Form inserted successfully');
+window.location.href='Index-pages/form.php';
+</script>";
 // Redirect or show a success message to the user
 }
     }
+
+
 elseif (isset($_POST['update'])){
 
         $query1 = "UPDATE students SET full_name = '$fullName', birth_date = '$birthDate', email = '$email',
@@ -105,9 +112,12 @@ $query4 = "UPDATE extended_details SET advertisement_source = '$advertisement', 
         WHERE student_id = '$studentID'";
 mysqli_query($con, $query4);
 
-// Close the database connection
 mysqli_close($con);
 
-// Redirect or show a success message to the user
+echo "
+<script>
+alert('Form updated successfully');
+window.location.href='Index-pages/form.php';
+</script>";
 }}
 ?>

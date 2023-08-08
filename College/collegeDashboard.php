@@ -16,7 +16,7 @@ $query = "
     JOIN facilities AS f ON c.college_id = f.college_id
     JOIN course_coll_relation AS cr ON c.college_id = cr.college_id
     JOIN courses AS cc ON cr.course_id = cc.course_id
-    WHERE user_id = '$userID'
+    WHERE user_id = '$userID' AND c.status = 'approved'
 "; 
 
 $results = mysqli_query($con, $query);
