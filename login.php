@@ -1,63 +1,7 @@
+
 <?php
 require('connection.php');
 session_start();
-
-if (isset($_POST['register'])) {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-
-    // Check if username or email already exist
-    $user_exist_query = "SELECT * FROM `user_login` WHERE `username`='$username' OR `email`='$email'";
-    $result = mysqli_query($con, $user_exist_query);
-
-    if ($result) {
-        if (mysqli_num_rows($result) > 0) {
-            $result_fetch = mysqli_fetch_assoc($result);
-            if ($result_fetch['username'] == $username) {
-                echo "
-                <script>alert('{$result_fetch['username']} - username already taken');
-                window.location.href='index.php';
-                </script>";
-            } else {
-                echo "
-                <script>alert('{$result_fetch['email']} - email already taken');
-                window.location.href='index.php';
-                </script>";
-            }
-        } else {
-            // Check if passwords match
-            if ($_POST['password'] !== $_POST['confirm_password']) {
-                echo "
-                <script>alert('Passwords do not match');
-                window.location.href='index.php';
-                </script>";
-            } else {
-                $fullname = $_POST['fullname'];
-                $usertype = $_POST['usertype'];
-                $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-
-                $query = "INSERT INTO `user_login`(`fullname`, `username`, `email`, `password`, `usertype`) VALUES ('$fullname', '$username', '$email', '$password', '$usertype')";
-                if (mysqli_query($con, $query)) {
-                    echo "
-                    <script>alert('Registration successful');
-                    window.location.href='Index-pages/index.php';
-                    </script>";
-                } else {
-                    echo "
-                    <script>alert('Cannot run query');
-                    window.location.href='Index-pages/index.php';
-                    </script>";
-                }
-            }
-        }
-    } else {
-        echo "
-        <script>
-        alert('Cannot run query');
-        window.location.href='Index-pages/index.php';
-        </script>";
-    }
-}
 
 #for login
 
@@ -99,7 +43,7 @@ if (isset($_POST['login'])) {
 
 
                 if ($user_row['usertype'] == 'College') {
-                    header("Location: College/students_application.php");
+                    header("Location: Index-pages/index.php");
                     
                     exit;
                 } elseif ($user_row['usertype'] == 'Student') {

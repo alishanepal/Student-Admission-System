@@ -48,11 +48,13 @@
                 s.*, 
                 fd.*, 
                 eb.*, 
-                ed.*
+                ed.*,
+                c.course_name
             FROM students AS s
             JOIN family_details AS fd ON s.student_id = fd.student_id
             JOIN educational_background AS eb ON s.student_id = eb.student_id
             JOIN extended_details AS ed ON s.student_id = ed.student_id
+            JOIN courses AS c ON s.course_id=c.course_id
             WHERE s.college_id = '$college_id' AND s.status = 'pending'";
 
             $result = mysqli_query($con, $query);
@@ -82,6 +84,7 @@
         <p>Phone Number: <?php echo $student['phone_number']; ?></p>
         <p>Gender: <?php echo $student['gender']; ?></p>
         <p>Post Code: <?php echo $student['post_code']; ?></p>
+        <p>Applied Course: <?php echo $student['course_name']; ?></p>
         <!-- Display other basic information fields -->
     
         <h2>Family Details</h2>
@@ -112,8 +115,8 @@
 <!-- Add status buttons -->
                 <form action="process_student.php" method="post">
                     <input type="hidden" name="student_id" value="<?= $student['student_id']; ?>">
-                    <button type="submit" name="status" value="approved">Approve</button>
-                    <button type="submit" name="status" value="rejected">Reject</button>
+                    <button type="submit" name="status" class="button1" value="approved">Approve</button>
+                    <button type="submit" name="status" class="button2" value="rejected">Reject</button>
                 </form>
         </div>
 

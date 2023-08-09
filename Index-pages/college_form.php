@@ -35,8 +35,8 @@ if (mysqli_num_rows($collegeResult) > 0) {
     $laboratories = $userData['number_of_labs'];
     $library = $userData['number_of_libraries'];
     $hostel = $userData['number_of_hostels'];
-     $affiliation1 = $userData['affiliation1'];
-    $affiliation2 = $userData['affiliation2'];
+    //  $affiliation1 = $userData['affiliation1'];
+    // $affiliation2 = $userData['affiliation2'];
     $authorityName =$userData['authority_name'];
 
     $courseCollData = array();
@@ -58,16 +58,18 @@ if (mysqli_num_rows($collegeResult) > 0) {
 <html>
 
 <head>
-    <title>College affiliation Form</title>
-    <link rel="stylesheet" href="college_form.css">
-    <style>
-        <?php include "../CSS/college_form.css" ?>
-    </style>
+    <title>College applicationForm</title>
+    <link rel="stylesheet" href="../CSS/college_form.css">
+    <link rel="stylesheet" href="../Css/style.css">
+
 </head>
+<section class="admission-form">
+        <h3>College Registration<br>form</h3>
+    </section>
 
     <section>
         <form id="collegeAffiliationForm" action="../admin/college/insert_college.php" method="POST"><br><br>
-            <h1 align="center">College affiliation Form</h1>
+            <h1 align="center">College application Form</h1>
             <div class="inform details">
                 <span class="title">
                     <h3>College Information</h3>

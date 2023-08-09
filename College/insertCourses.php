@@ -39,6 +39,8 @@ $feeStructure = $_POST['fee_structure'];
                       VALUES ('$beginsAt', '$duration', '$admissionFee', '$feeStructure', '$college_id', '$course_id')";
 
            mysqli_query($con, $query4);
+           echo "<script>alert('Form successfully submitted.'); window.location.href = '../../Index-pages/index.php';</script>";
+   
        
         }
         else {

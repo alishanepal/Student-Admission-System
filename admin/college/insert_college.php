@@ -16,8 +16,8 @@ $classrooms = $_POST['classrooms'];
 $laboratories = $_POST['laboratories'];
 $library = $_POST['library'];
 $hostel = $_POST['hostel'];
-$affiliation1 = $_POST['affiliation1'];
-$affiliation2 = $_POST['affiliation2'];
+// $affiliation1 = $_POST['affiliation1'];
+// $affiliation2 = $_POST['affiliation2'];
 $authorityName = $_POST['authority_name'];
 
 
@@ -44,8 +44,8 @@ for ($i = 0; $i < count($courseCode); $i++) {
 }
 
 // Insert into colleges
-$query1 = "INSERT INTO `colleges` (`college_name`, `address`, `phone_number`, `email`, `establishment_date`, `college_type`,`courses_no`, `authority_name`,`user_id`) 
-VALUES ('$collegeName', '$address', '$phoneNumber', '$email', '$year ', '$collegeType','$numberOfCourses' '$authorityName','{$_SESSION['userid']}')";
+$query1 = "INSERT INTO `colleges` (`college_name`, `address`, `phone_number`, `email`, `establishment_date`, `college_type`, `courses_no`, `authority_name`, `user_id`) 
+VALUES ('$collegeName', '$address', '$phoneNumber', '$email', '$year', '$collegeType', '$numberOfCourses', '$authorityName', '{$_SESSION['userid']}')";
 
  // Execute the query
  if (mysqli_query($con, $query1)) {
@@ -90,6 +90,7 @@ VALUES ('$collegeName', '$address', '$phoneNumber', '$email', '$year ', '$colleg
 
            mysqli_query($con, $query4);
        }
+       echo "<script>alert('Form successfully submitted.'); window.location.href = '../../Index-pages/index.php';</script>";
    } else {
        echo "Error inserting record: " . mysqli_error($con);
    }

@@ -102,8 +102,8 @@ mysqli_close($con);
             <label for="fee_structure">Fee Structure:</label>
             <input type="text" name="fee_structure" value="<?php echo $courseData['fee_structure']; ?>" required>
 
-            <button type="submit" name="update">Update</button>
-        </form>
+            <button type="submit" name="update_course">Update</button>
+</form>
     </div>
 </body>
 </html>

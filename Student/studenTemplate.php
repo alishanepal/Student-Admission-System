@@ -15,8 +15,8 @@
 	<div id="mySidenav" class="sidenav">
 	<p class="logo">Dashboard<span class="menu">☰</span></p>
 	<p class="logo1"> <span class="menu1">☰</span></p>
-   <a href="studentDashboard.php" class="icon-a">   <i class="uil uil-dashboard"></i>   Dashboard</a>
-  <a href="viewDetails.php"class="icon-a">  <i class="uil uil-chart-pie"></i> view Details</a>
+   <!-- <a href="studentDashboard.php" class="icon-a">   <i class="uil uil-dashboard"></i>   Dashboard</a> -->
+  <a href="studentDashboard.php"class="icon-a">  <i class="uil uil-chart-pie"></i> Dashboard</a>
   <a href="../Index-pages/form.php"class="icon-a"><i class="uil uil-list-ul"></i> Application Form</a>
  <!--  <a href="Profile.php"class="icon-a"><i class="fa fa-shopping-bag icons"></i> profile</a>
  <a href="#"class="icon-a"><i class="fa fa-tasks icons"></i>   Inventory</a>

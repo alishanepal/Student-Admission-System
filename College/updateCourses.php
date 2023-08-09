@@ -3,7 +3,6 @@ session_start();
 require '../connection.php';
 
 if (isset($_POST['update_course'])) {
-
     $relation_id = $_POST['relation_id'];
    
     $begins_at = $_POST['begins_at'];
@@ -17,14 +16,23 @@ if (isset($_POST['update_course'])) {
                                   admission_fee = '$admission_fee', fee_structure = '$fee_structure'
                               WHERE relation_id ='$relation_id'";
 
-    $update_relation_result = mysqli_query($con, $update_relation_query);
+if (mysqli_query($con, $update_relation_query)) {
+    echo "<script>
+    alert('No update data received.');
+    window.location.href='collegeDashboard.php';
+    </script>";
+} else {
+    echo "<script>
+    alert('No update data received.');
+    window.location.href='collegeDashboard.php';
+    </script>";}
 
-    if ($update_relation_result) {
-        echo "Course information updated successfully.";
-        // You might want to redirect or take other actions here
-    } else {
-        echo "Update query execution error: " . mysqli_error($con);
-    }
+} else {
+    echo "<script>
+    alert('query error.');
+    window.location.href='collegeDashboard.php';
+    </script>";
+    
 }
 
 mysqli_close($con);

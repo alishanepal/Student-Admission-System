@@ -9,8 +9,12 @@ if (isset($_GET['deleteid'])) {
     $delete_relation_result = mysqli_query($con, $delete_relation_query);
 
     if ($delete_relation_result) {
-        echo "Course information deleted successfully.";
-        // You might want to redirect or take other actions here
+      
+    echo "<script>
+    alert('course deleted successfully received.');
+    window.location.href='collegeDashboard.php';
+    </script>";
+    
     } else {
         echo "Update query execution error: " . mysqli_error($con);
     }

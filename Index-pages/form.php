@@ -92,7 +92,7 @@ if (mysqli_num_rows($userResult) > 0) {
                         <option disabled selected hidden value="    ">Choose College</option>
                         <?php
                         // Generate college select options
-                        $collegeQuery = "SELECT * FROM colleges";
+                        $collegeQuery = "SELECT * FROM colleges where status = 'approved'";
                         $collegeResult = mysqli_query($con, $collegeQuery);
 
                         // Loop through the fetched college data and generate options
@@ -145,10 +145,6 @@ if (mysqli_num_rows($userResult) > 0) {
                 </select><br><br>
         </div>
 
-
-
-        <!-- Rest of the code... -->
-
         <div class="details">
             <h2>PERSONAL DETAILS</h2>
 
@@ -180,9 +176,6 @@ if (mysqli_num_rows($userResult) > 0) {
                     <input type="text" name="postcode" id="postcode" placeholder="postcode"
                         value="<?php echo isset($postcode) ? $postcode : ''; ?>"><br>
                 </div>
-               
-
-            <!-- Rest of the code... -->
 
             <div class="gender details">
                 <label for="gender">Gender</label>
@@ -191,9 +184,6 @@ if (mysqli_num_rows($userResult) > 0) {
                 <input type="radio" name="gender" value="other" <?php echo (isset($gender) && $gender === 'other') ? 'checked' : ''; ?>>Others<br>
             </div>
 
-            <!-- Rest of the code... -->
-
-
             <h2>FAMILY DETAILS</h2>
             <div class="f-details">
                 <table border="1px" class="table">
@@ -201,7 +191,7 @@ if (mysqli_num_rows($userResult) > 0) {
                         <td rowspan="5" class="father">Father</td>
                         <td>
                             <label>Name</label>
-                            <input type="text" name="fatherName" required
+                           <input type="text" name="fatherName" required
                                 value="<?php echo isset($fatherName) ? $fatherName : ''; ?>">
                         </td>
                         <td>
@@ -353,12 +343,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true && isset($_SES
             echo "<input type='submit' name='update' value='Update'>";
         } elseif ($status === 'approved') {
             // If the form has been submitted and status is accepted, show a message
-            echo "This form has already been accepted.";
+            echo "<b>This form has already been accepted.<b>";
         }
     
 } else {
     // If not logged in as a student, show a message
-    echo "Please log in as a student.";
+    echo "<b>Please log in as a student.<b>";
 }
 ?>
 

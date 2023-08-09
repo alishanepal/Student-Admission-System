@@ -23,9 +23,9 @@ session_start();
     <nav>
       <ul class="nav-items">
         <li><a href="index.php">Home</a></li>
-        <li><a href="about.php">About </a></li>
+        <li><a href="#about-us">About </a></li>
         <li><a href="form.php">Admission Form </a></li>
-        <li><a href="contact.php">Contact Us</a></li>
+        <li><a href="#contact">Contact Us</a></li>
       </ul>
   <?php
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
@@ -59,7 +59,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
   <div class="popup-container" id="login-popup">
     <div class="popup">
-      <form method="POST" action="../login_register.php">
+      <form method="POST" action="../login.php">
         <div class="login-header">
           <h2 class="h2">
             LOGIN
@@ -67,15 +67,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
           <i class="uil uil-times form_close" onclick="popup('login-popup')"></i>
         </div>
         <div class="input_box">
-          <input type="text" name="email_username" placeholder="  Enter username or email" required />
+          <input type="text" name="email_username" placeholder="  Enter username or email" />
           <i class="uil uil-user user"></i>
         </div>
         <div class="input_box">
-          <input type="password" name="password" placeholder="Enter your password" required />
+          <input type="password" name="password" placeholder="Enter your password" />
           <i class="uil uil-lock password"></i>
           <i class="uil uil-eye-slash pw_hide"></i>
         </div>
-        <a href="#" class="forgot_pw">Forgot password?</a>
+        <!-- <a href="#" class="forgot_pw">Forgot password?</a> -->
         <button type="submit" name="login" class="button">Login Now</button>
 
         <div class="login_signup">Don't have an account? <a href="#" id="signup">Signup</a></div>
@@ -85,7 +85,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
   <div class="popup-container" id="register-popup">
     <div class="register popup">
-      <form method="POST" action="../login_register.php" onsubmit="return validateForm()">
+      <form method="POST" action="../register.php">
         <div class="login-header">
           <h2>
             REGISTER
@@ -94,34 +94,34 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
         </div>
 
         <div class="input_box">
-          <input type="text" name="fullname" placeholder="Enter your Full Name" required />
+          <input type="text" id = "fullname" name="fullname" placeholder="Enter your Full Name"/>
         </div>
 
         <div class="input_box">
-          <input type="text" name="username" placeholder=" Enter username" required />
+          <input type="text" id="username" name="username" placeholder=" Enter username" />
           <i class="uil uil-user user"></i>
         </div>
         <div class="input_box">
-          <input type="email" name="email" placeholder="  Enter your email" required />
+          <input type="email"  id="email" name="email" placeholder="  Enter your email" />
           <i class="uil uil-envelope-alt email"></i>
         </div>
 
         <div class="input_box">
-          <input type="password" name="password" placeholder="Create password" required />
+          <input type="password" id="password" name="password" placeholder="Create password" />
           <i class="uil uil-lock password"></i>
           <i class="uil uil-eye-slash pw_hide"></i>
         </div>
         <div class="input_box">
-          <input type="password" name="confirm_password" placeholder="Confirm password" required />
+          <input type="password"id="confirmPassword" name="confirm_password" placeholder="Confirm password"/>
           <i class="uil uil-lock password"></i>
           <i class="uil uil-eye-slash pw_hide"></i>
         </div>
 
         <div class="input_box">
-          <select name="usertype" required>
-            <option disabled selected hidden><i class="uil uil-user-check"></i>User Type</option>
-            <option><i class="uil uil-book-reader"></i>Student</option>
-            <option><i class="uil uil-university"></i>College</option>
+          <select name="usertype">
+            <option value="">User Type</option>
+            <option value="Student">Student</option>
+            <option value="College">College</option>
           </select>
         </div>
 
@@ -135,6 +135,45 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
   <script>
     <?php include "../JS/header.js" ?>
   </script>
+
+
+  <script>
+    const form= document.querySelector("form");
+    form.addEventListener('submit', function (event){
+
+      event.preventDefault();
+      if(validateForm()){
+      form.submit();
+
+      }
+    });
+function validateForm(){
+
+  const fullname = document.getElementById(fullname).value;
+  const username = document.getElementById(username).value;
+  const email =document.getElementById(email).value;
+  const emailregex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const password = document.getElementById(password).value;
+  const confirmPassword = document.getElementById(confirmPassword).value;
+
+  if(!emailregex.test(emailinput)){
+    alert("invalid email address.");
+    return false;
+  }
+
+  if(!fullname || !username ||!email || !password || !confirmPassword){
+    alert("please fill in all the field.")" 
+    return false;
+  }
+ 
+  if(password.length<8){
+    alert("password must be atleast 8");
+    return false;
+  }
+  return true;
+}
+
+    </script>
 </body>
 
 </html>
